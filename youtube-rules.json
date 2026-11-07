@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "version": "2026.11.06.2",
+  "released": "2026-11-06T18:00:00Z",
+  "minExtensionVersion": "1.3.0",
+  "description": "AdShield Smart YouTube Protection – default rules. Data only: no executable code.",
+  "endpoints": {
+    "player": [
+      "/youtubei/v1/player",
+      "/youtubei/v1/get_watch",
+      "/watch?",
+      "/playlist?list=",
+      "/get_video_info"
+    ],
+    "feed": [
+      "/youtubei/v1/browse",
+      "/youtubei/v1/search",
+      "/youtubei/v1/next",
+      "/youtubei/v1/guide",
+      "/youtubei/v1/music/get_queue"
+    ],
+    "reel": [
+      "/youtubei/v1/reel/reel_watch_sequence",
+      "/youtubei/v1/reel/reel_item_watch"
+    ]
+  },
+  "globals": [
+    "ytInitialPlayerResponse",
+    "ytInitialData",
+    "ytInitialReelWatchSequenceResponse",
+    "playerResponse"
+  ],
+  "hooks": {
+    "globals": true,
+    "jsonParse": true,
+    "responseJson": true,
+    "fetch": true,
+    "xhr": true,
+    "jsonStringify": true,
+    "promiseThen": true,
+    "domBypass": true,
+    "timers": true,
+    "customElements": true
+  },
+  "prune": {
+    "player": [
+      "adPlacements",
+      "playerAds",
+      "adSlots",
+      "auxiliaryUi.messageRenderers.enforcementMessageViewModel",
+      "auxiliaryUi.messageRenderers.bkaEnforcementMessageViewModel"
+    ],
+    "playerContainers": [
+      "playerResponse",
+      "unserializedPrefetchData.playerResponse",
+      "endpoint.watchEndpoint.unserializedPrefetchData.playerResponse"
+    ],
+    "removeRenderers": [
+      "adSlotRenderer",
+      "inFeedAdLayoutRenderer",
+      "promotedSparklesWebRenderer",
+      "promotedSparklesTextSearchRenderer",
+      "searchPyvRenderer",
+      "promotedVideoRenderer",
+      "compactPromotedVideoRenderer",
+      "compactPromotedItemRenderer",
+      "displayAdRenderer",
+      "actionCompanionAdRenderer",
+      "playerLegacyDesktopWatchAdsRenderer",
+      "videoMastheadAdV3Renderer",
+      "bannerPromoRenderer",
+      "brandVideoSingletonRenderer",
+      "brandVideoShelfRenderer",
+      "adsEngagementPanelContentRenderer",
+      "carouselAdRenderer",
+      "primetimePromoRenderer"
+    ],
+    "optionalRenderers": {
+      "hidePremiumPromos": [
+        "statementBannerRenderer",
+        "mealbarPromoRenderer",
+        "upsellDialogRenderer"
+      ],
+      "hideMerch": [
+        "merchandiseShelfRenderer",
+        "productListRenderer"
+      ]
+    },
+    "wrapperKeys": [
+      "richItemRenderer",
+      "richSectionRenderer",
+      "itemSectionRenderer"
+    ],
+    "engagementPanelAdTargets": [
+      "engagement-panel-ads"
+    ],
+    "reelEntryAdPaths": [
+      "command.reelWatchEndpoint.adClientParams.isAd",
+      "command.reelWatchEndpoint.adClientParams"
+    ],
+    "maxNodes": 400000,
+    "maxDepth": 64
+  },
+  "textReplace": [
+    {
+      "endpoint": "player",
+      "pattern": "\"adPlacements\"",
+      "replacement": "\"no_ads\""
+    },
+    {
+      "endpoint": "player",
+      "pattern": "\"adSlots\"",
+      "replacement": "\"no_ads\""
+    },
+    {
+      "endpoint": "player",
+      "pattern": "\"playerAds\"",
+      "replacement": "\"no_ads\""
+    }
+  ],
+  "requestEdits": [
+    {
+      "endpoint": "player",
+      "experimental": true,
+      "set": {
+        "playbackContext.contentPlaybackContext.isInlinePlaybackNoAd": true
+      }
+    }
+  ],
+  "contextStrategies": [
+    {
+      "id": "yahi",
+      "set": {
+        "params": "YAHI"
+      }
+    }
+  ],
+  "refererMarker": "#reloadxhr",
+  "stall": {
+    "checkIntervalMs": 1000,
+    "minLoadMs": 3500,
+    "stalledChecks": 3,
+    "maxRotations": 0,
+    "unplayableHelpUrl": "answer/3037019",
+    "dropInlineWhenStrategy": false,
+    "compatHours": 6,
+    "pausedChecks": 6,
+    "startTimeoutMs": 2500,
+    "skipHours": 24,
+    "proactiveContext": true
+  },
+  "neutralizeCallbacks": [
+    "onAbnormalityDetected"
+  ],
+  "timerBoosts": [
+    {
+      "needle": "[native code]",
+      "delay": 17000,
+      "boost": 0.001
+    }
+  ],
+  "domBypassProps": [
+    "fetch",
+    "Request",
+    "Response",
+    "XMLHttpRequest",
+    "JSON"
+  ],
+  "cosmetic": {
+    "core": [
+      "#player-ads",
+      "#masthead-ad",
+      "ytd-ad-slot-renderer",
+      "ytd-in-feed-ad-layout-renderer",
+      "ytd-display-ad-renderer",
+      "ytd-companion-slot-renderer",
+      "ytd-action-companion-ad-renderer",
+      "ytd-promoted-sparkles-web-renderer",
+      "ytd-promoted-sparkles-text-search-renderer",
+      "ytd-promoted-video-renderer",
+      "ytd-compact-promoted-video-renderer",
+      "ytd-search-pyv-renderer",
+      "ytd-player-legacy-desktop-watch-ads-renderer",
+      "ytd-video-masthead-ad-v3-renderer",
+      "ytd-video-masthead-ad-advertiser-info-renderer",
+      "ytd-banner-promo-renderer",
+      "ytd-brand-video-singleton-renderer",
+      "ytd-brand-video-shelf-renderer",
+      "ytd-carousel-ad-renderer",
+      "ytd-ads-engagement-panel-content-renderer",
+      "ytd-engagement-panel-section-list-renderer[target-id=\"engagement-panel-ads\"]",
+      "ytd-rich-item-renderer:has(> #content > ytd-ad-slot-renderer)",
+      "ytd-rich-item-renderer:has(> ytd-ad-slot-renderer)",
+      ".ytp-ad-overlay-container",
+      ".ytp-ad-overlay-slot",
+      ".ytp-ad-image-overlay",
+      ".ytp-ad-text-overlay",
+      ".ytp-ad-message-container",
+      "ad-slot-renderer",
+      "ytm-promoted-sparkles-web-renderer",
+      "ytm-companion-ad-renderer",
+      "ytm-promoted-video-renderer",
+      "ytm-rich-item-renderer > ad-slot-renderer",
+      "lazy-list > ad-slot-renderer"
+    ],
+    "shortsAds": [
+      "ytd-reel-video-renderer:has(ytd-ad-slot-renderer)",
+      "#shorts-inner-container > .ytd-shorts:has(> .ytd-reel-video-renderer > ytd-ad-slot-renderer)",
+      "ytm-reel-item-renderer:has(ad-slot-renderer)"
+    ],
+    "merch": [
+      "ytd-merch-shelf-renderer",
+      "#shopping-timely-shelf",
+      "yt-overlay-product-sticker",
+      ".ytp-suggested-action > .ytp-suggested-action-badge",
+      ".ytp-featured-product",
+      "#sticker-layer"
+    ],
+    "premiumPromos": [
+      "ytd-mealbar-promo-renderer",
+      "ytmusic-mealbar-promo-renderer",
+      "yt-mealbar-promo-renderer",
+      "ytd-statement-banner-renderer",
+      "ytd-rich-section-renderer:has(ytd-statement-banner-renderer)",
+      "ytd-primetime-promo-renderer",
+      "tp-yt-paper-dialog:has(> ytd-mealbar-promo-renderer)",
+      "tp-yt-paper-dialog:has(yt-upsell-dialog-renderer)"
+    ]
+  },
+  "player": {
+    "playerSelectors": [
+      "#movie_player",
+      ".html5-video-player"
+    ],
+    "adClasses": [
+      "ad-showing",
+      "ad-interrupting"
+    ],
+    "adIndicators": [
+      ".ytp-ad-player-overlay",
+      ".ytp-ad-player-overlay-layout",
+      ".ytp-ad-preview-container",
+      ".ytp-ad-badge",
+      ".ytp-ad-simple-ad-badge",
+      ".ytp-ad-duration-remaining",
+      ".video-ads.ytp-ad-module > *"
+    ],
+    "skipButtons": [
+      ".ytp-skip-ad-button",
+      ".ytp-ad-skip-button",
+      ".ytp-ad-skip-button-modern",
+      ".ytp-ad-skip-button-slot button",
+      ".ytp-ad-skip-button-container button",
+      ".videoAdUiSkipButton"
+    ],
+    "overlayClose": [
+      ".ytp-ad-overlay-close-button",
+      ".ytp-ad-overlay-close-container"
+    ],
+    "maxSeekDurationSec": 180,
+    "maxPlaybackRate": 16,
+    "stuckAdTimeoutMs": 120000,
+    "checkIntervalMs": 250
+  },
+  "enforcement": {
+    "selectors": [
+      "ytd-enforcement-message-view-model",
+      "#enforcement-message"
+    ],
+    "dialog": "tp-yt-paper-dialog",
+    "dismissButtons": [
+      "#dismiss-button button",
+      "#dismiss-button",
+      "button[aria-label=\"Close\"]",
+      ".yt-spec-button-shape-next--call-to-action"
+    ],
+    "backdrop": "tp-yt-iron-overlay-backdrop",
+    "playabilityErrors": [
+      "yt-playability-error-supported-renderers",
+      "#error-screen .ytp-error",
+      ".ytp-error-content"
+    ],
+    "textPatterns": [
+      "ad ?blockers?",
+      "adblock",
+      "blokowani[ae] reklam",
+      "blokad[ayę] reklam",
+      "Werbeblocker",
+      "bloqueur",
+      "bloqueador",
+      "blocco degli annunci",
+      "Terms of Service"
+    ]
+  },
+  "heuristics": {
+    "hideTokens": [
+      "ad",
+      "ads",
+      "promoted"
+    ],
+    "logTokens": [
+      "promo",
+      "sponsored",
+      "upsell",
+      "mealbar",
+      "merch",
+      "advertiser"
+    ],
+    "neverHide": [
+      "ytd-app",
+      "ytd-player",
+      "ytd-watch-flexy",
+      "ytd-masthead",
+      "ytd-video-renderer",
+      "ytd-rich-item-renderer",
+      "ytd-reel-video-renderer",
+      "ytd-popup-container"
+    ],
+    "dataKeyPattern": "^(?:ad[A-Z]|ads[A-Z]|.*(?:Ad|Ads)(?:Renderer|Placements?|Slots?|Params|Config)$|promoted[A-Z])"
+  },
+  "structure": {
+    "watchPage": [
+      "#movie_player",
+      "video",
+      "ytd-watch-flexy, ytd-app, ytm-app, ytmusic-app"
+    ]
+  }
+}
